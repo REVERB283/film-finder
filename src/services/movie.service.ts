@@ -15,7 +15,7 @@ export const searchMovie = async (params: SearchMovieProps): Promise<ISearchMovi
 		.then((res) => res.data)
 		.catch((err) => {
 			console.log(err);
-			return { Response: "False", Error: "Something went wrong" };
+			return { Response: "False", Error: "Something went wrong", Search: [] };
 		});
 
 	return response;

@@ -8,7 +8,7 @@ export interface IMovie {
 
 export interface ISearchMovie {
 	Response: string;
-	Search?: IMovie[];
+	Search: IMovie[];
 	totalResults?: string;
 	Error?: string;
 }
