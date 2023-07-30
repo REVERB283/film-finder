@@ -1,18 +1,20 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Favourites from "./components/Favourites";
-import Movie from "./components/Movie";
-import Movies from "./components/Movies";
-import PageNotFound from "./components/PageNotFound";
+import Favourites from "./pages/Favourites";
+import MainPage from "./pages/MainPage";
+import MovieDetails from "./pages/MovieDetails";
+import Movies from "./pages/Movies";
+import PageNotFound from "./pages/PageNotFound";
 
-function App() {
+function App(): React.ReactElement {
 	return (
 		<Routes>
-			<Route path="/" element={<Navigate to="/movies" />} />
-			<Route path="/movies" element={<Movies />}>
-				<Route path=":movieId" element={<Movie />} />
+			<Route path="/" element={<MainPage />}>
+				<Route path="/movies" element={<Movies />} />
+				<Route path="/movies/:movieId" element={<MovieDetails />} />
+				<Route path="liked" element={<Favourites />} />
 			</Route>
-			<Route path="/liked" element={<Favourites />} />
 			<Route path="*" element={<PageNotFound />} />
 		</Routes>
 	);

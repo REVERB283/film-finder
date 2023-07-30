@@ -1,6 +1,6 @@
 import React from "react";
 
-function PageNotFound() {
+function PageNotFound(): React.ReactElement {
 	return (
 		<div className="d-flex justify-content-center align-items-center vh-100 flex-column">
 			<h2>Error 404</h2>

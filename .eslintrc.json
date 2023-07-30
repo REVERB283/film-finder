@@ -1,0 +1,75 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"jest": true
+	},
+	"extends": [
+		"react-app",
+		"react-app/jest",
+		"standard-with-typescript",
+		"plugin:react/recommended",
+		"plugin:prettier/recommended"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
+	"plugins": [
+		"react",
+		"@typescript-eslint",
+		"prettier"
+	],
+	"rules": {
+		"indent": [
+			2,
+			"tab"
+		],
+		"no-tabs": 0,
+		"quotes": [
+			"error",
+			"double",
+			{
+				"avoidEscape": true
+			}
+		],
+		"@typescript-eslint/quotes": [
+			"error",
+			"double",
+			{
+				"avoidEscape": true
+			}
+		],
+		"react/react-in-jsx-scope": "off",
+		"react/jsx-uses-react": "off",
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [
+					".js",
+					".jsx",
+					".ts",
+					".tsx"
+				]
+			}
+		],
+		"react/jsx-props-no-spreading": [
+			"warn"
+		],
+		"no-shadow": "off",
+		"@typescript-eslint/no-floating-promises": [
+			"off"
+		],
+		"@typescript-eslint/no-confusing-void-expression": [
+			"off",
+			{
+				"ignoreArrowShorthand": false,
+				"ignoreVoidOperator": false
+			}
+		]
+	}
+}
