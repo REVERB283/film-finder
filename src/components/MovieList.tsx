@@ -48,17 +48,19 @@ const MoviesList: React.FC = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ padding: "5rem" }}>
 			<input type="text" name="search" value={searchKeyword} onChange={(e) => handleInputChange(e.target)} />
 
 			{isLoading ? <div>Loading...</div> : null}
 
-			{movieList !== null
-				? movieList.map((m, i) => {
-						if (i === movieList.length - 1) return <MovieListItem key={m.imdbID} movieItem={m} ref={lastMovieElementRef} />;
-						return <MovieListItem key={m.imdbID} movieItem={m} />;
-				  })
-				: null}
+			<div style={{ display: "grid", gridTemplateColumns: "repeat(2, auto)", gridAutoRows: "40rem" }}>
+				{movieList !== null
+					? movieList.map((m, i) => {
+							if (i === movieList.length - 1) return <MovieListItem key={m.imdbID} movieItem={m} ref={lastMovieElementRef} />;
+							return <MovieListItem key={m.imdbID} movieItem={m} />;
+					  })
+					: null}
+			</div>
 		</div>
 	);
 };

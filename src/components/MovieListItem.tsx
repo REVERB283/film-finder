@@ -11,33 +11,32 @@ const MovieListItem = React.forwardRef<HTMLDivElement, IMovieListItemProps>(({ m
 	const navigate = useNavigate();
 
 	const handleNavigate = (id?: string): void => {
-		if (id !== "" && id !== undefined) navigate(id);
-	};
-
-	const handleLikeButtonClick = (): void => {
-		console.log(movieItem);
-		const moviesUnStringifyed = localStorage.getItem(LIKED_MOVIES);
-		const movies: IMovie[] | null = moviesUnStringifyed !== null ? JSON.parse(moviesUnStringifyed) : [];
-
-		if (movies !== null && movieItem !== null && movies.find((m) => m.imdbID === movieItem.imdbID) === undefined) movies.push(movieItem);
-		localStorage.setItem(LIKED_MOVIES, JSON.stringify(movies));
+		if (id !== "" && id !== undefined) navigate(`/movies/${id}`);
 	};
 
 	const renderMovieDetails = (): JSX.Element => {
 		return (
 			<>
 				<img src={movieItem?.Poster} alt={movieItem?.Title} onClick={() => handleNavigate(movieItem?.imdbID)} />
-				<button onClick={handleLikeButtonClick}>Like</button>
+				<p>
+					{movieItem?.Title} ({movieItem?.Year})
+				</p>
+				<p>{movieItem?.Type}</p>
 			</>
 		);
 	};
 
 	return ref !== null ? (
-		<div key={movieItem?.imdbID} ref={ref}>
+		<div key={movieItem?.imdbID} ref={ref} style={{ border: "1px solid black" }}>
 			{renderMovieDetails()}
 		</div>
 	) : (
-		<div key={movieItem?.imdbID}>{renderMovieDetails()}</div>
+		<div
+			key={movieItem?.imdbID}
+			style={{ border: "1px solid black", boxSizing: "border-box", cursor: "pointer", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}
+		>
+			{renderMovieDetails()}
+		</div>
 	);
 });
 

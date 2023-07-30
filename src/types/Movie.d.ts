@@ -16,6 +16,7 @@ export interface ISearchMovie {
 export interface IMovieDetail {
 	Response: string;
 	Error?: string;
+	imdbID?: "string";
 	Title?: string;
 	Year?: string;
 	Rated?: string;
