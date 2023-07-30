@@ -11,6 +11,7 @@ function App(): React.ReactElement {
 	return (
 		<Routes>
 			<Route path="/" element={<MainPage />}>
+				<Route path="" element={<Movies />} />
 				<Route path="/movies" element={<Movies />} />
 				<Route path="/movies/:movieId" element={<MovieDetails />} />
 				<Route path="liked" element={<Favourites />} />

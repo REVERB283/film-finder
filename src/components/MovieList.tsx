@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { searchMovie } from "../services/movie.service";
 import { type IMovie } from "../types/Movie";
 import MovieListItem from "./MovieListItem";
-import { searchMovie } from "../services/movie.service";
 
 const MoviesList: React.FC = () => {
 	const intersectionObeserver = useRef<IntersectionObserver>();
@@ -47,12 +47,14 @@ const MoviesList: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: "5rem" }}>
-			<input type="text" name="search" value={searchKeyword} onChange={(e) => handleInputChange(e.target)} />
+		<div className="p-3 p-md-5">
+			<div className="row my-5 mx-0">
+				<input className="form-control" type="text" name="search" value={searchKeyword} onChange={(e) => handleInputChange(e.target)} placeholder="Search for Movie" />
+			</div>
 
-			{isLoading ? <div>Loading...</div> : null}
+			{isLoading ? <div className="row mx-0">Loading...</div> : null}
 
-			<div style={{ display: "grid", gridTemplateColumns: "repeat(2, auto)", gridAutoRows: "40rem" }}>
+			<div className="row mx-0 px-sm-4">
 				{movieList !== null
 					? movieList.map((m, i) => {
 							if (i === movieList.length - 1) return <MovieListItem key={m.imdbID} movieItem={m} ref={lastMovieElementRef} />;

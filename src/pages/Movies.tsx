@@ -3,7 +3,7 @@ import MoviesList from "../components/MovieList";
 
 const Movies: React.FC = () => {
 	return (
-		<div>
+		<div className="container">
 			<MoviesList />
 		</div>
 	);

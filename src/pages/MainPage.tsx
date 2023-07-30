@@ -15,6 +15,7 @@ const MainPage: React.FC = () => {
 		align-items: center;
 		background-color: #f8f9fa;
 		padding: 0.5rem 3rem;
+		box-shadow: 0px 1px 4px 0px #8990a321;
 	`;
 
 	const NavBarContainer = styled.div`
