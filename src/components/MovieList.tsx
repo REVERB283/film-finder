@@ -3,7 +3,7 @@ import { searchMovie } from "../services/movie.service";
 import { type IMovie } from "../types/Movie";
 import MovieListItem from "./MovieListItem";
 
-const MoviesList: React.FC = () => {
+const MoviesList: React.FC = React.memo(() => {
 	const intersectionObeserver = useRef<IntersectionObserver>();
 
 	const [searchKeyword, setSearchKeyword] = useState<string>("dog");
@@ -16,7 +16,10 @@ const MoviesList: React.FC = () => {
 			setIsLoading(true);
 			const response = await searchMovie({ s: searchKeyword, page });
 			if (response.Response === "True") setMovieList((list) => (list !== null ? list.concat(response.Search) : response.Search));
-			else setMovieList(null);
+			else {
+				setMovieList(null);
+				setPage(1);
+			}
 			setIsLoading(false);
 		};
 		fetchMovies();
@@ -30,7 +33,6 @@ const MoviesList: React.FC = () => {
 
 			intersectionObeserver.current = new IntersectionObserver((movies) => {
 				if (movies[0].isIntersecting) {
-					console.log("last movie", isLoading);
 					setPage((page) => page + 1);
 				}
 			});
@@ -52,18 +54,21 @@ const MoviesList: React.FC = () => {
 				<input className="form-control" type="text" name="search" value={searchKeyword} onChange={(e) => handleInputChange(e.target)} placeholder="Search for Movie" />
 			</div>
 
-			{isLoading ? <div className="row mx-0">Loading...</div> : null}
+			{isLoading ? <h3 className="d-flex justify-content-center align-items-center fw-bold vh-100">Loading...</h3> : null}
 
 			<div className="row mx-0 px-sm-4">
-				{movieList !== null
-					? movieList.map((m, i) => {
-							if (i === movieList.length - 1) return <MovieListItem key={m.imdbID} movieItem={m} ref={lastMovieElementRef} />;
-							return <MovieListItem key={m.imdbID} movieItem={m} />;
-					  })
-					: null}
+				{movieList !== null ? (
+					movieList.map((m, i) => {
+						if (i === movieList.length - 1) return <MovieListItem key={m.imdbID} movieItem={m} ref={lastMovieElementRef} />;
+						return <MovieListItem key={m.imdbID} movieItem={m} />;
+					})
+				) : (
+					<h3 className="d-flex justify-content-center align-items-center fw-bold vh-100">Something went wrong.</h3>
+				)}
 			</div>
 		</div>
 	);
-};
+});
 
+MoviesList.displayName = "MoviesList";
 export default MoviesList;

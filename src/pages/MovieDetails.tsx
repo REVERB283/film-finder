@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 const MovieDetails: React.FC = () => {
 	const { movieId } = useParams();
 	const [movieDetails, setMovieDetails] = useState<IMovieDetail | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const CoverImage = styled.img`
 		object-fit: fill;
@@ -16,9 +17,11 @@ const MovieDetails: React.FC = () => {
 
 	useEffect(() => {
 		const fetchMovie = async (): Promise<void> => {
+			setIsLoading(true);
 			const response = await getMovieDetails({ i: movieId ?? "" });
 			if (response.Response === "True") setMovieDetails(response);
 			else setMovieDetails(null);
+			setIsLoading(false);
 		};
 		fetchMovie();
 	}, [movieId]);
@@ -42,24 +45,32 @@ const MovieDetails: React.FC = () => {
 		}
 	};
 
-	return movieDetails !== null ? (
-		<div className="row my-5 mx-0 px-3 px-md-5">
-			<div className="col-sm-12 col-md-6 px-5">
-				<CoverImage src={movieDetails?.Poster} alt={movieDetails?.Title} style={{}} />
-			</div>
-			<div className="col-sm-12 col-md-6 px-5 my-3 my-md-0">
-				<h2 className="fw-bold">
-					{movieDetails?.Title} ({movieDetails.Year})
-				</h2>
-				<p>{movieDetails?.Plot}</p>
-				<p>{movieDetails?.Actors}</p>
-				<p>Rating: {movieDetails?.imdbRating}</p>
-				<button className="btn btn-primary px-5" onClick={handleLikeButtonClick}>
-					Like
-				</button>
-			</div>
-		</div>
-	) : null;
+	return (
+		<>
+			{isLoading ? <h3 className="d-flex justify-content-center align-items-center fw-bold vh-100">Loading...</h3> : null}
+			{!isLoading &&
+				(movieDetails !== null ? (
+					<div className="row my-5 mx-0 px-3 px-md-5">
+						<div className="col-sm-12 col-md-6 px-5">
+							<CoverImage src={movieDetails?.Poster} alt={movieDetails?.Title} style={{}} />
+						</div>
+						<div className="col-sm-12 col-md-6 px-5 my-3 my-md-0">
+							<h2 className="fw-bold">
+								{movieDetails?.Title} ({movieDetails.Year})
+							</h2>
+							<p>{movieDetails?.Plot}</p>
+							<p>{movieDetails?.Actors}</p>
+							<p>Rating: {movieDetails?.imdbRating}</p>
+							<button className="btn btn-primary px-5" onClick={handleLikeButtonClick}>
+								Like
+							</button>
+						</div>
+					</div>
+				) : (
+					<h3 className="d-flex justify-content-center align-items-center fw-bold vh-100">Something went wrong.</h3>
+				))}
+		</>
+	);
 };
 
 export default MovieDetails;
