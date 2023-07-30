@@ -12,6 +12,13 @@ const MoviesList: React.FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
+		const fetchMovies = async (): Promise<void> => {
+			setIsLoading(true);
+			const response = await searchMovie({ s: searchKeyword, page });
+			if (response.Response === "True") setMovieList((list) => (list !== null ? list.concat(response.Search) : response.Search));
+			else setMovieList(null);
+			setIsLoading(false);
+		};
 		fetchMovies();
 	}, [searchKeyword, page]);
 
@@ -32,14 +39,6 @@ const MoviesList: React.FC = () => {
 		},
 		[isLoading],
 	);
-
-	const fetchMovies = async (): Promise<void> => {
-		setIsLoading(true);
-		const response = await searchMovie({ s: searchKeyword, page });
-		if (response.Response === "True") setMovieList((list) => (list !== null ? list.concat(response.Search) : response.Search));
-		else setMovieList(null);
-		setIsLoading(false);
-	};
 
 	const handleInputChange = (target: HTMLInputElement): void => {
 		const targetValue = target.value;

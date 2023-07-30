@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { LIKED_MOVIES } from "../config";
 import { getMovieDetails } from "../services/movie.service";
 import { type IMovie, type IMovieDetail } from "../types/Movie";
-import { LIKED_MOVIES } from "../config";
 
 const MovieDetails: React.FC = () => {
 	const { movieId } = useParams();
 	const [movieDetails, setMovieDetails] = useState<IMovieDetail | null>(null);
 
 	useEffect(() => {
+		const fetchMovie = async (): Promise<void> => {
+			const response = await getMovieDetails({ i: movieId ?? "" });
+			if (response.Response === "True") setMovieDetails(response);
+			else setMovieDetails(null);
+		};
 		fetchMovie();
 	}, [movieId]);
-
-	const fetchMovie = async (): Promise<void> => {
-		const response = await getMovieDetails({ i: movieId ?? "" });
-		if (response.Response === "True") setMovieDetails(response);
-		else setMovieDetails(null);
-	};
 
 	const handleLikeButtonClick = (): void => {
 		console.log(movieDetails);
