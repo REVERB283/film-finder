@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { type IMovie } from "../types/Movie";
-import { LIKED_MOVIES } from "../config";
 
 interface IMovieListItemProps {
 	movieItem: IMovie | null;
